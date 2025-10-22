@@ -24,3 +24,40 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Calendar Custom Styles */
+.calendar-day-met {
+  background-color: #bbf7d0 !important;
+  border-color: #4ade80 !important;
+}
+
+.calendar-day-surplus {
+  background-color: #bfdbfe !important;
+  border-color: #3b82f6 !important;
+}
+
+.calendar-day-deficit {
+  background-color: #fed7aa !important;
+  border-color: #fb923c !important;
+}
+
+.react-calendar {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.react-calendar__tile {
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.react-calendar__tile--active {
+  background-color: #3b82f6 !important;
+  color: white !important;
+}
+
+.react-calendar__tile--now {
+  background-color: #fef3c7;
+}
+
