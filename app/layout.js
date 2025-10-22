@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Nutrient Tracker - Track Your Nutrition with AI",
-  description: "Track your daily nutrient intake with AI-powered meal analysis",
+  title: "Vashu Bulks - Track Your Nutrition with AI",
+  description: "Track your daily nutrition intake with AI-powered meal analysis",
 };
 
 export default function RootLayout({ children }) {

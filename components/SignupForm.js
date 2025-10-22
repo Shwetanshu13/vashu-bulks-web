@@ -24,16 +24,16 @@ export default function SignupForm({ onSuccess, onSwitchToLogin }) {
     }
 
     return (
-        <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+        <div className="w-full max-w-md mx-auto p-6 bg-gray-800 rounded-lg shadow-xl border border-gray-700">
+            <h2 className="text-2xl font-bold mb-6 text-center text-white">Sign Up</h2>
             {error && (
-                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                <div className="mb-4 p-3 bg-red-900/50 border border-red-700 text-red-200 rounded">
                     {error}
                 </div>
             )}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-1">
+                    <label htmlFor="name" className="block text-sm font-medium mb-1 text-gray-300">
                         Name
                     </label>
                     <input
@@ -42,11 +42,11 @@ export default function SignupForm({ onSuccess, onSwitchToLogin }) {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                 </div>
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-1">
+                    <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-300">
                         Email
                     </label>
                     <input
@@ -55,11 +55,11 @@ export default function SignupForm({ onSuccess, onSwitchToLogin }) {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                 </div>
                 <div>
-                    <label htmlFor="password" className="block text-sm font-medium mb-1">
+                    <label htmlFor="password" className="block text-sm font-medium mb-1 text-gray-300">
                         Password
                     </label>
                     <input
@@ -69,25 +69,25 @@ export default function SignupForm({ onSuccess, onSwitchToLogin }) {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                         minLength={8}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-gray-400 mt-1">
                         Must be at least 8 characters
                     </p>
                 </div>
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 disabled:bg-blue-300 transition"
+                    className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition"
                 >
                     {loading ? 'Creating account...' : 'Sign Up'}
                 </button>
             </form>
-            <p className="mt-4 text-center text-sm">
+            <p className="mt-4 text-center text-sm text-gray-400">
                 Already have an account?{' '}
                 <button
                     onClick={onSwitchToLogin}
-                    className="text-blue-600 hover:underline"
+                    className="text-blue-400 hover:text-blue-300 hover:underline"
                 >
                     Login
                 </button>

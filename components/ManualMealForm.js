@@ -52,16 +52,16 @@ export default function ManualMealForm({ onSuccess }) {
     }
 
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold mb-4">Manual Meal Entry</h3>
+        <div className="bg-gray-800 p-6 rounded-lg shadow-xl border border-gray-700">
+            <h3 className="text-xl font-bold mb-4 text-white">Manual Meal Entry</h3>
             {error && (
-                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                <div className="mb-4 p-3 bg-red-900/50 border border-red-700 text-red-200 rounded">
                     {error}
                 </div>
             )}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label htmlFor="date" className="block text-sm font-medium mb-1">
+                    <label htmlFor="date" className="block text-sm font-medium mb-1 text-gray-300">
                         Date
                     </label>
                     <input
@@ -70,11 +70,11 @@ export default function ManualMealForm({ onSuccess }) {
                         value={meal.date}
                         onChange={(e) => setMeal({ ...meal, date: e.target.value })}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     />
                 </div>
                 <div>
-                    <label htmlFor="mealName" className="block text-sm font-medium mb-1">
+                    <label htmlFor="mealName" className="block text-sm font-medium mb-1 text-gray-300">
                         Meal Name
                     </label>
                     <input
@@ -84,12 +84,12 @@ export default function ManualMealForm({ onSuccess }) {
                         onChange={(e) => setMeal({ ...meal, mealName: e.target.value })}
                         required
                         placeholder="e.g., Breakfast - Oatmeal"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <label htmlFor="calories" className="block text-sm font-medium mb-1">
+                        <label htmlFor="calories" className="block text-sm font-medium mb-1 text-gray-300">
                             Calories (kcal)
                         </label>
                         <input
@@ -100,11 +100,11 @@ export default function ManualMealForm({ onSuccess }) {
                             required
                             min="0"
                             step="1"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         />
                     </div>
                     <div>
-                        <label htmlFor="protein" className="block text-sm font-medium mb-1">
+                        <label htmlFor="protein" className="block text-sm font-medium mb-1 text-gray-300">
                             Protein (g)
                         </label>
                         <input
@@ -115,11 +115,11 @@ export default function ManualMealForm({ onSuccess }) {
                             required
                             min="0"
                             step="0.1"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         />
                     </div>
                     <div>
-                        <label htmlFor="fats" className="block text-sm font-medium mb-1">
+                        <label htmlFor="fats" className="block text-sm font-medium mb-1 text-gray-300">
                             Fats (g)
                         </label>
                         <input
@@ -130,11 +130,11 @@ export default function ManualMealForm({ onSuccess }) {
                             required
                             min="0"
                             step="0.1"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         />
                     </div>
                     <div>
-                        <label htmlFor="carbs" className="block text-sm font-medium mb-1">
+                        <label htmlFor="carbs" className="block text-sm font-medium mb-1 text-gray-300">
                             Carbs (g)
                         </label>
                         <input
@@ -145,14 +145,14 @@ export default function ManualMealForm({ onSuccess }) {
                             required
                             min="0"
                             step="0.1"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         />
                     </div>
                 </div>
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 disabled:bg-green-300 transition"
+                    className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 disabled:bg-green-400 disabled:cursor-not-allowed transition"
                 >
                     {loading ? 'Logging...' : 'Log Meal'}
                 </button>

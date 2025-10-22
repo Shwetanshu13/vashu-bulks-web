@@ -72,10 +72,10 @@ export default function AIMealForm({ onSuccess }) {
     }
 
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-bold mb-4">AI-Powered Meal Entry</h3>
+        <div className="bg-gray-800 p-6 rounded-lg shadow-xl border border-gray-700">
+            <h3 className="text-xl font-bold mb-4 text-white">AI-Powered Meal Entry</h3>
             {error && (
-                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                <div className="mb-4 p-3 bg-red-900/50 border border-red-700 text-red-200 rounded">
                     {error}
                 </div>
             )}
@@ -83,7 +83,7 @@ export default function AIMealForm({ onSuccess }) {
             {!analyzedMeal ? (
                 <form onSubmit={handleAnalyze} className="space-y-4">
                     <div>
-                        <label htmlFor="date" className="block text-sm font-medium mb-1">
+                        <label htmlFor="date" className="block text-sm font-medium mb-1 text-gray-300">
                             Date
                         </label>
                         <input
@@ -92,11 +92,11 @@ export default function AIMealForm({ onSuccess }) {
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
                             required
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         />
                     </div>
                     <div>
-                        <label htmlFor="mealDescription" className="block text-sm font-medium mb-1">
+                        <label htmlFor="mealDescription" className="block text-sm font-medium mb-1 text-gray-300">
                             Describe Your Meal
                         </label>
                         <textarea
@@ -106,33 +106,33 @@ export default function AIMealForm({ onSuccess }) {
                             required
                             rows={4}
                             placeholder="e.g., A bowl of oatmeal with blueberries and a glass of milk"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         />
                     </div>
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 disabled:bg-purple-300 transition"
+                        className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 disabled:bg-purple-400 disabled:cursor-not-allowed transition"
                     >
                         {loading ? 'Analyzing...' : 'Analyze with AI'}
                     </button>
                 </form>
             ) : (
                 <div className="space-y-4">
-                    <div className="bg-blue-50 p-4 rounded-md">
-                        <h4 className="font-bold text-lg mb-2">{analyzedMeal.mealName}</h4>
+                    <div className="bg-gray-700 border border-gray-600 p-4 rounded-md">
+                        <h4 className="font-bold text-lg mb-2 text-white">{analyzedMeal.mealName}</h4>
                         <div className="grid grid-cols-2 gap-2 text-sm">
-                            <div>
-                                <span className="font-medium">Calories:</span> {analyzedMeal.calories} kcal
+                            <div className="text-gray-300">
+                                <span className="font-medium text-blue-400">Calories:</span> {analyzedMeal.calories} kcal
                             </div>
-                            <div>
-                                <span className="font-medium">Protein:</span> {analyzedMeal.protein}g
+                            <div className="text-gray-300">
+                                <span className="font-medium text-green-400">Protein:</span> {analyzedMeal.protein}g
                             </div>
-                            <div>
-                                <span className="font-medium">Fats:</span> {analyzedMeal.fats}g
+                            <div className="text-gray-300">
+                                <span className="font-medium text-yellow-400">Fats:</span> {analyzedMeal.fats}g
                             </div>
-                            <div>
-                                <span className="font-medium">Carbs:</span> {analyzedMeal.carbs}g
+                            <div className="text-gray-300">
+                                <span className="font-medium text-purple-400">Carbs:</span> {analyzedMeal.carbs}g
                             </div>
                         </div>
                     </div>
@@ -140,14 +140,14 @@ export default function AIMealForm({ onSuccess }) {
                         <button
                             onClick={handleSave}
                             disabled={loading}
-                            className="flex-1 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 disabled:bg-green-300 transition"
+                            className="flex-1 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 disabled:bg-green-400 disabled:cursor-not-allowed transition"
                         >
                             {loading ? 'Saving...' : 'Save Meal'}
                         </button>
                         <button
                             onClick={() => setAnalyzedMeal(null)}
                             disabled={loading}
-                            className="flex-1 bg-gray-600 text-white py-2 rounded-md hover:bg-gray-700 disabled:bg-gray-300 transition"
+                            className="flex-1 bg-gray-600 text-white py-2 rounded-md hover:bg-gray-700 disabled:bg-gray-500 disabled:cursor-not-allowed transition"
                         >
                             Cancel
                         </button>

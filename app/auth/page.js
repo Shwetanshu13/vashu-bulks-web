@@ -22,11 +22,11 @@ export default function AuthPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 <div className="text-center mb-8">
-                    <h1 className="text-4xl font-bold text-gray-800 mb-2">🥗 Nutrient Tracker</h1>
-                    <p className="text-gray-600">Track your nutrition with AI assistance</p>
+                    <h1 className="text-4xl font-bold text-white mb-2">🥗 Vashu Bulks</h1>
+                    <p className="text-gray-400">Track your nutrition with AI assistance</p>
                 </div>
 
                 {isLogin ? (

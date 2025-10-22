@@ -1,4 +1,4 @@
-# Nutrient Tracker Website
+# Vashu Bulks Website
 
 A powerful AI-integrated nutrient tracking application built with Next.js, Appwrite, and Google Gemini AI.
 
