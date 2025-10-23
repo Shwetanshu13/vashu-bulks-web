@@ -86,6 +86,8 @@ export default function NutrientCalendar({ refresh }) {
                         value={selectedDate}
                         tileClassName={getTileClassName}
                         className="w-full border-none"
+                        maxDate={new Date()}
+                        tileDisabled={({ date }) => date > new Date()}
                     />
                 </div>
 
@@ -170,18 +172,52 @@ export default function NutrientCalendar({ refresh }) {
                         </div>
                     </div>
 
-                    <div className="mt-4">
-                        <h5 className="font-medium mb-2 text-gray-200">Meals ({selectedDayData.meals.length}):</h5>
-                        <ul className="space-y-2">
-                            {selectedDayData.meals.map((meal, index) => (
-                                <li key={index} className="text-sm p-2 bg-gray-700 rounded flex justify-between items-center">
-                                    <span className="font-medium text-white">{meal.mealName}</span>
-                                    <span className="text-xs text-gray-400">
-                                        {meal.isAIcalculated && '🤖 AI'} {meal.calories} kcal
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
+                    <div className="mt-6">
+                        <h5 className="font-semibold mb-3 text-lg text-white border-b border-gray-600 pb-2">
+                            Meals for this day ({selectedDayData.meals.length})
+                        </h5>
+                        {selectedDayData.meals.length > 0 ? (
+                            <div className="space-y-3">
+                                {selectedDayData.meals.map((meal, index) => (
+                                    <div key={index} className="p-4 bg-gray-700 rounded-lg border border-gray-600 hover:border-gray-500 transition">
+                                        <div className="flex justify-between items-start mb-3">
+                                            <h6 className="font-semibold text-white text-base">{meal.mealName}</h6>
+                                            {meal.isAIcalculated && (
+                                                <span className="text-xs bg-purple-600 text-white px-2 py-1 rounded-full">
+                                                    🤖 AI Calculated
+                                                </span>
+                                            )}
+                                        </div>
+                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                            <div className="bg-gray-800 p-2 rounded text-center">
+                                                <div className="text-xs text-gray-400 mb-1">Calories</div>
+                                                <div className="font-bold text-blue-400">{meal.calories}</div>
+                                                <div className="text-xs text-gray-500">kcal</div>
+                                            </div>
+                                            <div className="bg-gray-800 p-2 rounded text-center">
+                                                <div className="text-xs text-gray-400 mb-1">Protein</div>
+                                                <div className="font-bold text-green-400">{meal.protein}g</div>
+                                                <div className="text-xs text-gray-500">grams</div>
+                                            </div>
+                                            <div className="bg-gray-800 p-2 rounded text-center">
+                                                <div className="text-xs text-gray-400 mb-1">Fats</div>
+                                                <div className="font-bold text-yellow-400">{meal.fats}g</div>
+                                                <div className="text-xs text-gray-500">grams</div>
+                                            </div>
+                                            <div className="bg-gray-800 p-2 rounded text-center">
+                                                <div className="text-xs text-gray-400 mb-1">Carbs</div>
+                                                <div className="font-bold text-orange-400">{meal.carbs}g</div>
+                                                <div className="text-xs text-gray-500">grams</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-6 text-gray-400">
+                                No meals logged for this day
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
@@ -195,8 +231,20 @@ export default function NutrientCalendar({ refresh }) {
             )}
 
             {!selectedDayData && (
-                <div className="bg-gray-700 p-6 rounded-lg text-center text-gray-400">
-                    No meals logged for this day.
+                <div className="bg-gray-800 p-6 rounded-lg shadow-xl border border-gray-700">
+                    <div className="text-center py-8">
+                        <div className="text-4xl mb-3">📅</div>
+                        <h4 className="text-lg font-semibold mb-2 text-white">
+                            {selectedDate.toLocaleDateString('en-US', {
+                                weekday: 'long',
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}
+                        </h4>
+                        <p className="text-gray-400">No meals logged for this day</p>
+                        <p className="text-sm text-gray-500 mt-2">Start tracking your nutrition to see data here!</p>
+                    </div>
                 </div>
             )}
         </div>
