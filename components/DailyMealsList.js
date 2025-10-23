@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getMealsByDate } from '@/lib/database';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -15,13 +15,7 @@ export default function DailyMealsList({ selectedDate, onMealDeleted }) {
         carbs: 0
     });
 
-    useEffect(() => {
-        if (user && selectedDate) {
-            loadMeals();
-        }
-    }, [user, selectedDate]);
-
-    async function loadMeals() {
+    const loadMeals = useCallback(async () => {
         setLoading(true);
         try {
             const dateString = selectedDate.toISOString().split('T')[0];
@@ -42,7 +36,13 @@ export default function DailyMealsList({ selectedDate, onMealDeleted }) {
         } finally {
             setLoading(false);
         }
-    }
+    }, [user, selectedDate]);
+
+    useEffect(() => {
+        if (user && selectedDate) {
+            loadMeals();
+        }
+    }, [user, selectedDate, loadMeals]);
 
     if (loading) {
         return (

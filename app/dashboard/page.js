@@ -64,7 +64,7 @@ export default function DashboardPage() {
                                     : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-600'
                                     }`}
                             >
-                                📋 Today's Meals
+                                📋 Today&apos;s Meals
                             </button>
                             <button
                                 onClick={() => setActiveTab('calendar')}

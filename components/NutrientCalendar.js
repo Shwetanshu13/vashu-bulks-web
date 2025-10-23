@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { getAllUserMeals, aggregateMealsByDate, getUserRequirements } from '@/lib/database';
@@ -14,17 +14,7 @@ export default function NutrientCalendar({ refresh }) {
     const [requirements, setRequirements] = useState(null);
     const [selectedDayData, setSelectedDayData] = useState(null);
 
-    useEffect(() => {
-        if (user) {
-            loadData();
-        }
-    }, [user, refresh]);
-
-    useEffect(() => {
-        updateSelectedDayData();
-    }, [selectedDate, mealData]);
-
-    async function loadData() {
+    const loadData = useCallback(async () => {
         setLoading(true);
         try {
             const [meals, reqs] = await Promise.all([
@@ -40,12 +30,22 @@ export default function NutrientCalendar({ refresh }) {
         } finally {
             setLoading(false);
         }
-    }
+    }, [user]);
 
-    function updateSelectedDayData() {
+    const updateSelectedDayData = useCallback(() => {
         const dateString = selectedDate.toISOString().split('T')[0];
         setSelectedDayData(mealData[dateString] || null);
-    }
+    }, [selectedDate, mealData]);
+
+    useEffect(() => {
+        if (user) {
+            loadData();
+        }
+    }, [user, loadData, refresh]);
+
+    useEffect(() => {
+        updateSelectedDayData();
+    }, [updateSelectedDayData]);
 
     function getTileClassName({ date }) {
         const dateString = date.toISOString().split('T')[0];

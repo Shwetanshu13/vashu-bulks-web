@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getUserRequirements, saveRequirements } from '@/lib/database';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -17,13 +17,7 @@ export default function RequirementsForm({ onSave }) {
         targetCarbs: ''
     });
 
-    useEffect(() => {
-        if (user) {
-            loadRequirements();
-        }
-    }, [user]);
-
-    async function loadRequirements() {
+    const loadRequirements = useCallback(async () => {
         try {
             const data = await getUserRequirements(user.$id);
             if (data) {
@@ -39,7 +33,13 @@ export default function RequirementsForm({ onSave }) {
         } finally {
             setLoading(false);
         }
-    }
+    }, [user]);
+
+    useEffect(() => {
+        if (user) {
+            loadRequirements();
+        }
+    }, [user, loadRequirements]);
 
     async function handleSubmit(e) {
         e.preventDefault();
