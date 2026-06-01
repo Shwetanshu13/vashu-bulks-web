@@ -42,12 +42,24 @@ pnpm install
 2. Create a new project
 3. Enable **Email/Password** authentication in the Auth settings
 4. Create a new database
-5. Create **two collections** with the following schemas:
+5. Create **three collections** with the following schemas:
 
 #### **Meals Collection**
 
 - `userId` (String, required, indexed) - This stores the Appwrite user's `$id`
 - `date` (String, required, indexed) - Format: YYYY-MM-DD
+- `mealName` (String, required)
+- `calories` (Integer, required)
+- `protein` (Float, required)
+- `fats` (Float, required)
+- `carbs` (Float, required)
+- `isAIcalculated` (Boolean, required)
+
+**Permissions**: Allow authenticated users to create/read/update/delete their own documents
+
+#### **Saved Meals Collection**
+
+- `userId` (String, required, indexed) - This stores the Appwrite user's `$id`
 - `mealName` (String, required)
 - `calories` (Integer, required)
 - `protein` (Float, required)
@@ -86,6 +98,7 @@ NEXT_PUBLIC_APPWRITE_PROJECT_ID=your-project-id-here
 NEXT_PUBLIC_APPWRITE_DATABASE_ID=your-database-id-here
 NEXT_PUBLIC_APPWRITE_MEALS_COLLECTION_ID=your-meals-collection-id
 NEXT_PUBLIC_APPWRITE_REQUIREMENTS_COLLECTION_ID=your-requirements-collection-id
+NEXT_PUBLIC_APPWRITE_SAVED_MEALS_COLLECTION_ID=your-saved-meals-collection-id
 
 # Gemini API Configuration
 GEMINI_API_KEY=your-gemini-api-key-here

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { logMeal } from '@/lib/database';
+import { logMeal, saveMealAsTemplate } from '@/lib/database';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function AIMealForm({ onSuccess }) {
@@ -11,6 +11,7 @@ export default function AIMealForm({ onSuccess }) {
     const [mealDescription, setMealDescription] = useState('');
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [analyzedMeal, setAnalyzedMeal] = useState(null);
+    const [saveAsTemplate, setSaveAsTemplate] = useState(false);
 
     async function handleAnalyze(e) {
         e.preventDefault();
@@ -57,6 +58,18 @@ export default function AIMealForm({ onSuccess }) {
                 date: date,
                 isAIcalculated: true
             });
+
+            if (saveAsTemplate) {
+                await saveMealAsTemplate(user.$id, {
+                    mealName: analyzedMeal.mealName,
+                    calories: analyzedMeal.calories,
+                    protein: analyzedMeal.protein,
+                    fats: analyzedMeal.fats,
+                    carbs: analyzedMeal.carbs,
+                    isAIcalculated: true
+                });
+                setSaveAsTemplate(false);
+            }
 
             // Reset form
             setMealDescription('');
@@ -135,6 +148,18 @@ export default function AIMealForm({ onSuccess }) {
                                 <span className="font-medium text-purple-400">Carbs:</span> {analyzedMeal.carbs}g
                             </div>
                         </div>
+                    </div>
+                    <div className="flex items-center pt-2 pb-2">
+                        <input
+                            id="saveAsTemplateAI"
+                            type="checkbox"
+                            checked={saveAsTemplate}
+                            onChange={(e) => setSaveAsTemplate(e.target.checked)}
+                            className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-600 rounded bg-gray-700"
+                        />
+                        <label htmlFor="saveAsTemplateAI" className="ml-2 block text-sm text-gray-300">
+                            Save this meal for future use
+                        </label>
                     </div>
                     <div className="flex gap-2">
                         <button

@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { logMeal } from '@/lib/database';
+import { useState, useEffect } from 'react';
+import { logMeal, getSavedMeals, saveMealAsTemplate } from '@/lib/database';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function ManualMealForm({ onSuccess }) {
@@ -16,6 +16,15 @@ export default function ManualMealForm({ onSuccess }) {
         carbs: '',
         date: new Date().toISOString().split('T')[0]
     });
+    const [savedMeals, setSavedMeals] = useState([]);
+    const [selectedSavedMeal, setSelectedSavedMeal] = useState('');
+    const [saveAsTemplate, setSaveAsTemplate] = useState(false);
+
+    useEffect(() => {
+        if (user) {
+            getSavedMeals(user.$id).then(setSavedMeals).catch(console.error);
+        }
+    }, [user]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -33,6 +42,20 @@ export default function ManualMealForm({ onSuccess }) {
                 isAIcalculated: false
             });
 
+            if (saveAsTemplate) {
+                await saveMealAsTemplate(user.$id, {
+                    mealName: meal.mealName,
+                    calories: Number(meal.calories),
+                    protein: Number(meal.protein),
+                    fats: Number(meal.fats),
+                    carbs: Number(meal.carbs),
+                    isAIcalculated: false
+                });
+                const updated = await getSavedMeals(user.$id);
+                setSavedMeals(updated);
+                setSaveAsTemplate(false);
+            }
+
             // Reset form
             setMeal({
                 mealName: '',
@@ -42,6 +65,7 @@ export default function ManualMealForm({ onSuccess }) {
                 carbs: '',
                 date: new Date().toISOString().split('T')[0]
             });
+            setSelectedSavedMeal('');
 
             if (onSuccess) onSuccess();
         } catch (err) {
@@ -59,6 +83,51 @@ export default function ManualMealForm({ onSuccess }) {
                     {error}
                 </div>
             )}
+
+            {savedMeals.length > 0 && (
+                <div className="mb-4">
+                    <label htmlFor="savedMeals" className="block text-sm font-medium mb-1 text-gray-300">
+                        Load Saved Meal
+                    </label>
+                    <select
+                        id="savedMeals"
+                        value={selectedSavedMeal}
+                        onChange={(e) => {
+                            const selectedId = e.target.value;
+                            setSelectedSavedMeal(selectedId);
+                            if (selectedId) {
+                                const selected = savedMeals.find(sm => sm.$id === selectedId);
+                                if (selected) {
+                                    setMeal(prev => ({
+                                        ...prev,
+                                        mealName: selected.mealName,
+                                        calories: selected.calories,
+                                        protein: selected.protein,
+                                        fats: selected.fats,
+                                        carbs: selected.carbs
+                                    }));
+                                }
+                            } else {
+                                setMeal(prev => ({
+                                    ...prev,
+                                    mealName: '',
+                                    calories: '',
+                                    protein: '',
+                                    fats: '',
+                                    carbs: ''
+                                }));
+                            }
+                        }}
+                        className="w-full px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    >
+                        <option value="">-- Select a saved meal (Optional) --</option>
+                        {savedMeals.map(sm => (
+                            <option key={sm.$id} value={sm.$id}>{sm.mealName} ({sm.calories} kcal)</option>
+                        ))}
+                    </select>
+                </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label htmlFor="date" className="block text-sm font-medium mb-1 text-gray-300">
@@ -149,6 +218,20 @@ export default function ManualMealForm({ onSuccess }) {
                         />
                     </div>
                 </div>
+
+                <div className="flex items-center pt-2">
+                    <input
+                        id="saveAsTemplate"
+                        type="checkbox"
+                        checked={saveAsTemplate}
+                        onChange={(e) => setSaveAsTemplate(e.target.checked)}
+                        className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-600 rounded bg-gray-700"
+                    />
+                    <label htmlFor="saveAsTemplate" className="ml-2 block text-sm text-gray-300">
+                        Save this meal for future use
+                    </label>
+                </div>
+
                 <button
                     type="submit"
                     disabled={loading}
